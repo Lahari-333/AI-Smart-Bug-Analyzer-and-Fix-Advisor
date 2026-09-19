@@ -1,0 +1,19 @@
+# Python bytecode assets
+__pycache__/
+*.pyc
+
+# Local Virtual Environments
+venv/
+.venv/
+env/
+
+# Massive local database and weights (Keep out of source control)
+chroma_db/
+local_ai_model/
+
+# System or environment configurations
+.env
+.DS_Store
+c h r o m a _ d b / 
+ 
+ 

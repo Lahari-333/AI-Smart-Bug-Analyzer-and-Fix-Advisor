@@ -1,0 +1,14 @@
+Bug ID: 10423 - Apache HTTP Server
+Status: RESOLVED FIXED
+Component: core
+Description: Segmentation fault occurring in mod_proxy when handling concurrent chunked transfer requests. The connection drops completely under heavy thread load.
+
+Bug ID: 88492 - Mozilla Firefox
+Status: NEW
+Component: Core: Graphics
+Description: Memory leak detected in WebGL rendering context during repeated canvas resizing loops. Out of memory crash triggered after 45 seconds of continuous execution.
+
+Bug ID: 30219 - Apache Tomcat
+Status: VERIFIED
+Component: catalina_connector
+Description: ExpiredSignature exception thrown randomly during high-concurrency handshake sequences. Token parsing validation logic fails to refresh timestamp boundaries.

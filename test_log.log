@@ -1,0 +1,15 @@
+[2026-07-02 10:14:22] ERROR in auth_service: Failed to validate user session tokens.
+<div class="error-wrapper">
+Traceback (most recent call last):
+  File "/app/services/auth.py", line 118, in verify_jwt
+    token_data = jwt.decode(token, secret_key, algorithms=["HS256"])
+  File "/usr/local/lib/python3.11/site-packages/jwt/api_jwt.py", line 134, in decode
+    payload, _, _, _ = self._load_get_unpack_verify(jwt, key, algorithms)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/jwt/api_jwt.py", line 162, in _load_get_unpack_verify
+    raise ExpiredSignatureError("Signature has expired")
+jwt.exceptions.ExpiredSignatureError: Signature has expired
+</div>
+INFO: Connection closed down cleanly.
+
+https://chat.whatsapp.com/C7sKRFmAlZbHk0BPgoSg73
