@@ -145,6 +145,17 @@ class TestBugAnalyzerPipeline(unittest.TestCase):
         self.assertIn("loadSampleBug", response.text)
         self.assertIn("aibafa_analysis_history", response.text)
 
+    def test_api_health_endpoint(self):
+        """Verify /api/health returns HTTP 200, healthy status, and vector database status."""
+        response = self.client.get("/api/health")
+        self.assertEqual(response.status_code, 200)
+        data = response.json()
+        self.assertEqual(data["status"], "healthy")
+        self.assertEqual(data["service"], "AI Smart Bug Analyzer & Fix Advisor")
+        self.assertIn("version", data)
+        self.assertIn("vector_database", data)
+        self.assertIn("status", data["vector_database"])
+
 
 if __name__ == "__main__":
     unittest.main()

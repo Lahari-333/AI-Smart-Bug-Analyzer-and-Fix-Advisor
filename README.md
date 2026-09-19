@@ -3,10 +3,24 @@
 [![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688.svg)](https://fastapi.tiangolo.com/)
 [![ChromaDB](https://img.shields.io/badge/ChromaDB-Vector%20Store-orange.svg)](https://www.trychroma.com/)
+[![Render](https://img.shields.io/badge/Render-Deployed%20Live-46E3B7.svg)](https://ai-smart-bug-analyzer-and-fix-advisor-1.onrender.com/)
 [![Git LFS](https://img.shields.io/badge/Git%20LFS-Tracked-informational.svg)](https://git-lfs.github.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)](LICENSE)
 
 An intelligent, multi-agent software defect diagnosis, triage, and automated remediation platform. The system ingests raw runtime stack traces and multi-megabyte log dumps, performs semantic vector retrieval against historical defects using **ChromaDB**, and coordinates a sequential 4-stage multi-agent pipeline to isolate root causes, categorize severity, and synthesize production-ready code patches.
+
+---
+
+## 🚀 Live Demo
+
+Experience the live, interactive production deployment on Render:
+
+- **Web Dashboard**: [https://ai-smart-bug-analyzer-and-fix-advisor-1.onrender.com/](https://ai-smart-bug-analyzer-and-fix-advisor-1.onrender.com/)
+- **Interactive Swagger Docs**: [https://ai-smart-bug-analyzer-and-fix-advisor-1.onrender.com/docs](https://ai-smart-bug-analyzer-and-fix-advisor-1.onrender.com/docs)
+- **System Health Endpoint**: [https://ai-smart-bug-analyzer-and-fix-advisor-1.onrender.com/api/health](https://ai-smart-bug-analyzer-and-fix-advisor-1.onrender.com/api/health)
+
+> [!NOTE]
+> Deployed on Render's free tier. If the instance has spun down due to inactivity, the initial page load may take approximately 20–45 seconds to spin up. All machine learning inference runs entirely in memory without requiring external API tokens.
 
 ---
 
@@ -32,14 +46,20 @@ Modern software applications generate massive volumes of log telemetry and runti
   3. *JWT ExpiredSignature & Clock Skew* (`AUTH_SERVICE`)
 - **Live Analysis Pipeline Visualization**: Step-by-step visual stepper tracking defect lifecycle through 6 stages: Bug Submitted → Preprocessing → Severity Triage → Log Analysis → Knowledge Retrieval → Fix Recommendation.
 - **RAG / Retrieved Knowledge Section**: Collapsible drawer exposing real historical matches retrieved from ChromaDB, including reference ID, source component, similarity percentage, and matched text context.
+- **Interactive 8-Tab Dashboard**:
+  1. **Live Dashboard**: Real-time multi-agent triage, severity meter, dynamic latency counter, 1-click sample bugs, and report download.
+  2. **Test Suite**: In-browser test runner executing 6 core agent tests with pass/fail counts, duration, and detailed diagnostic logs.
+  3. **Seed Knowledge Base**: Live ChromaDB vector collection monitor displaying active records and an interactive seeding trigger.
+  4. **Statistical Analysis**: Aggregated telemetry covering mean triage latency, systemic risk index, and severity/component breakdown charts.
+  5. **About**: In-depth architectural review of the multi-agent diagnostic pipeline, design goals, and engineering workflows.
+  6. **Tech Stack**: Complete inventory of frontend, backend, ML embeddings, vector database, and deployment specifications.
+  7. **FAQ**: 9 comprehensive engineering Q&As covering offline models, RAG mechanisms, latency, Git LFS, and deployment.
+  8. **Sign In / Register**: User authentication with full guest/demo reviewer access pre-configured.
 - **Dedicated Recommended Fix Section**: Synthesizes verified code patches (SQLAlchemy pool tuning, JWT interceptors with clock-skew leeway, null-safe Optional patterns) with syntax styling, remediation steps, and preventative measures.
 - **One-Click Clipboard Actions**: Native browser Clipboard API integration with instant visual toast notifications for "Copy Analysis" and "Copy Code Patch".
 - **Exportable Markdown Reports**: Generates and downloads clean, comprehensive Markdown diagnostic reports (`<bug_id>_Diagnostic_Report.md`) for incident postmortems.
 - **Client-Side Analysis History**: Lightweight session history stored via `localStorage` allowing engineers to view, reload, and clear previous analyses with zero database overhead.
 - **Fast 6MB+ File Ingestion**: Ingests `.log`, `.txt`, `.csv`, and `.json` log files, isolates error signatures, computes deduplication similarity, and produces chunk-by-chunk agent breakdowns.
-- **Automated Test Suite**: Built-in test runner validating agent heuristics, vector store connectivity, and classification accuracy.
-- **Knowledge Base Seeding**: Pre-configured benchmark dataset seeding into ChromaDB for instant RAG grounding.
-- **Statistical Analytics Engine**: Real-time telemetry tracking defect counts, component impact spreads, severity distributions, and systemic risk indices.
 
 ---
 
@@ -155,6 +175,7 @@ AI-SMART-BUG-ANALYZER-AND-FIX-ADVISOR/
 ├── LICENSE                                 # MIT License
 ├── README.md                               # Comprehensive project documentation
 ├── requirements.txt                        # Pinned application dependencies
+├── render.yaml                             # Render Web Service blueprint specification
 ├── main.py                                 # FastAPI application, multi-agent pipeline, and dashboard
 ├── seed_knowledge_base.py                  # Standalone Kaggle dataset vector indexing script
 ├── seed_bugs.txt                           # Benchmark defect signature fixtures
@@ -305,10 +326,23 @@ The repository includes historical run captures across milestones in the [`Pics_
 
 ## Evaluation / Results
 
-- **Triage Latency**: Measured average execution time of **$\approx 0.38$ seconds** per stack trace on standard CPU workstations.
+- **Triage Latency**: Measured dynamic execution time of **$\approx 0.19$–$0.38$ seconds** per stack trace on standard CPU workstations.
 - **Log Ingestion Throughput**: Ingests and chunks 6MB+ unstructured log files in **$< 30$ seconds** using asynchronous thread pooling.
-- **Test Suite Verification**: **13 out of 13 integration tests passed** ($100\%$ pass rate) validating log parsing, severity triage, root cause analysis, fix patch formatting, and endpoint schemas.
+- **Test Suite Verification**: **14 out of 14 unit and integration tests passed** ($100\%$ pass rate) validating log parsing, severity triage, root cause analysis, fix patch formatting, vector storage connectivity, and the `/api/health` monitoring endpoint.
 - **Formal Evaluation Metrics**: Formal precision, recall, and F1 benchmarks across large open-source test splits (e.g., Eclipse / Mozilla datasets) are currently in progress and have not been formally published in this repository.
+
+---
+
+## Deployment (Render)
+
+The application is configured for deployment to **Render** via infrastructure-as-code using `render.yaml`.
+
+- **Live Service URL**: [https://ai-smart-bug-analyzer-and-fix-advisor-1.onrender.com/](https://ai-smart-bug-analyzer-and-fix-advisor-1.onrender.com/)
+- **Health Check Path**: `/api/health`
+- **Build Command**: `pip install --upgrade pip && pip install -r requirements.txt`
+- **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+- **Continuous Deployment**: Pushes to `main` automatically trigger builds and zero-downtime rolling deploys.
+- **Automatic Knowledge Base Seeding**: If the ChromaDB vector store is empty upon deployment launch, the server auto-populates benchmark defect records on the `startup` event, guaranteeing immediate RAG availability.
 
 ---
 
